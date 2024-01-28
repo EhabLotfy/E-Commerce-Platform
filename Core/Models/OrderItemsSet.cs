@@ -1,10 +1,10 @@
 ﻿namespace Core.Models
 {
 
-    [Table(name:"OrderItems", Schema ="Main")]
-
+    [Table(name:"OrderItems", Schema ="Main")] 
     public class OrderItemsSet
     {
+        public int Id { get; set; }
         #region Properties
         [Range(0, int.MaxValue)] public int Quantity { get; set; }
         [Range(0, int.MaxValue)] public double Price { get; set; }

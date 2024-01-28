@@ -23,6 +23,12 @@ namespace E_Commerce_Platform.Controllers
         {
             return  Ok(await _repo.GetCustomerOrdersAsync(customerId, pageNumber, pageSize));  
         }
+        [HttpGet("[action]")]
+        [Produces(typeof(OrderGetDTO))]
+        public IActionResult GetById(int orderId)
+        {
+            return  Ok(_repo.GetById(orderId));  
+        }
         #endregion
 
     }

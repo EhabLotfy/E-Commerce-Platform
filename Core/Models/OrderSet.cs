@@ -21,7 +21,7 @@ namespace Core.Models
         #region Navigation properties
         public int CustomerId { get; set; }
         public CustomerSet Customer { get; set; }
-        [NotMapped]
+
         public  ICollection<OrderItemsSet> OrderItems { get; set; }
         #endregion
     }

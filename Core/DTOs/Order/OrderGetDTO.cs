@@ -9,6 +9,7 @@ namespace Core.DTOs.Order
 {
     public class OrderGetDTO
     {
+        public int Id { get; set; }
         public DateTime OrderDate { get; set; }
         public OrderStatusEnum status { get; set; }
         public int CustomerId { get; set; }

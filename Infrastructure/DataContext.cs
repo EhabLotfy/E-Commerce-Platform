@@ -16,6 +16,7 @@ public class DataContext:DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<OrderItemsSet>().HasNoKey();
+  
+       // modelBuilder.Entity<OrderItemsSet>().HasNoKey();
     }
 }
