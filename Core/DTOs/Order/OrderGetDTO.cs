@@ -11,7 +11,7 @@ namespace Core.DTOs.Order
     {
         public int Id { get; set; }
         public DateTime OrderDate { get; set; }
-        public OrderStatusEnum status { get; set; }
+        public OrderStatus status { get; set; }
         public int CustomerId { get; set; }
         public string CustomerName { get; set; } = string.Empty;
         public string CustomerEmail { get; set; } = string.Empty;

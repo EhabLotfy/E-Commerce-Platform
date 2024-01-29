@@ -8,8 +8,10 @@ namespace Core.Constants.Errors
 {
     public class SharedError
     {
-        public static readonly string CUSROMEREXIST = "This customer already exist!";
-        public static readonly string FILLREQUIREDFIELDS = "Please fill all required fields!";
+        public static readonly string FAIL = "Fail: ";
+
+        public static readonly string FILLREQUIREDFIELDS = FAIL + "Please fill all required fields!";
+
 
     }
 }

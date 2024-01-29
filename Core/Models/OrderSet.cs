@@ -14,8 +14,9 @@ namespace Core.Models
         #region Properties        
         public DateTime OrderDate { get; set; }
 
-        [Range(0, int.MaxValue)] public double TotalAmount { get; set; }
-        public OrderStatusEnum status { get; set; }
+        [Range(0, int.MaxValue)] 
+        public double TotalAmount { get; set; }
+        public OrderStatus status { get; set; }
         #endregion
 
         #region Navigation properties

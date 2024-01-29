@@ -57,7 +57,7 @@ public class DataSeed
                {
                    CustomerId = 1,
                    OrderDate = DateTime.Now,
-                   status = OrderStatusEnum.Delivered,
+                   status = OrderStatus.Delivered,
                    TotalAmount = 2390.5,                       
                    OrderItems = new List<OrderItemsSet>()
                    {
@@ -74,7 +74,7 @@ public class DataSeed
                {
                    CustomerId = 2,
                    OrderDate = DateTime.Now,
-                   status = OrderStatusEnum.Shipped,
+                   status = OrderStatus.Shipped,
                    TotalAmount = 1250,
                    OrderItems = new List<OrderItemsSet>()
                    {

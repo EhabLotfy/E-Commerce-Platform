@@ -1,6 +1,6 @@
 ﻿namespace Core.Enums;
 
-public enum OrderStatusEnum
+public enum OrderStatus
 {
     Pending,        
     Shipped,

@@ -1,5 +1,6 @@
 ﻿using Core.DTOs.Order;
 using Core.Helper;
+using Foods.Core.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,11 @@ namespace Core.IRepos
 {
     public interface IOrderRepo
     {
-        Task<APIResponse<List<OrderGetDTO>>> GetCustomerOrdersAsync(int customerId, int pageNumber, int pageSize);
-        Task<APIResponse<List<OrderGetDTO>>> GetOrdersAsync(int pageNumber, int pageSize);
+        Task<APIResponse<PaginatedList<OrderGetDTO>>> GetCustomerOrdersAsync(int customerId, int pageNumber, int pageSize);
+        Task<APIResponse<PaginatedList<OrderListDTO>>> GetOrdersAsync(int pageNumber, int pageSize);
         APIResponse<OrderGetDTO> GetById(int orderId);
         Task<APIResponse<OrderGetDTO>> Create(OrderAddDTO dto);
-        void Update(int OrderId, OrderStatusEnum orderStatus);
+        void Update(int OrderId, OrderStatus orderStatus);
         void Cancel(int OrderId);
 
     }
