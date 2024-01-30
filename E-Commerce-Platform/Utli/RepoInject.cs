@@ -13,6 +13,7 @@ namespace E_Commerce_Platform.Utli
 
               // inject all repos here
                services.AddTransient<IOrderRepo, OrderRepo>();
+               services.AddTransient<IProductRepo, ProductRepo>();
              
 
                 return services;

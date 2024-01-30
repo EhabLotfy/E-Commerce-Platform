@@ -9,6 +9,6 @@ namespace Core.DTOs.Order
     public class OrderAddDTO
     {
         public int CustomerId { get; set; }
-        public List<OrderItemsDTO> OrderItems { get; set; }
+        public List<OrderItemsAddDTO> OrderItems { get; set; }
     }
 }

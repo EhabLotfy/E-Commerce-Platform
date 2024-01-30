@@ -40,5 +40,14 @@ namespace E_Commerce_Platform.Controllers
         }
         #endregion
 
+        #region Set
+        [HttpPost("[action]")]
+        [Produces(typeof(OrderAddDTO))]
+        public async Task<IActionResult> Create(OrderAddDTO dto)
+        {
+            return Ok(await _repo.Create(dto)); ;
+        }
+        
+        #endregion
     }
 }

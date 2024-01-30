@@ -8,6 +8,7 @@ namespace Core.Models
         public OrderSet()
         {
             OrderDate = DateTime.UtcNow;
+          
         } 
         #endregion
 

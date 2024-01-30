@@ -18,10 +18,13 @@ namespace Infrastructure.Repos
     public class OrderRepo : IOrderRepo
     {
         private readonly DataContext _context;
+        private readonly IProductRepo _productRepo;
+
         public IOrderState State { get;internal set; }
-        public OrderRepo(DataContext context)
+        public OrderRepo(DataContext context,IProductRepo productRepo)
         {
             _context = context;
+            _productRepo = productRepo;
             State = new OrderProcessingState();
         }  
         
@@ -131,17 +134,44 @@ namespace Infrastructure.Repos
                         response.Message = CustomerErrorsContant.CUSTOMERNOTFOUND;
                     if (dto.OrderItems.Count == 0)
                         response.Message = OrderErrorsConstant.ORDERITEMSEMPTY;
+
+                    response.Status = StatusCodes.Status400BadRequest;
+                    return response;
                 }
                 #endregion
+                double TotalAmount = await GetOrderTotalAsync(dto.OrderItems);
 
-                await _context.Orders.AddAsync(dto.Adapt<OrderSet>());
+                OrderSet orderSet = new OrderSet()
+                {
+                    CustomerId = dto.CustomerId,
+                    TotalAmount = TotalAmount,
+                    status = OrderStatus.Pending
+                };
+
+                await _context.Orders.AddAsync(orderSet);
                 await _context.SaveChangesAsync();
 
-               await trans.CommitAsync();
-                
-               response.Status = StatusCodes.Status200OK;
+                int orderId = orderSet.Id;
+                if (orderId > 0)
+                {
+                    orderSet.OrderItems = FillOrderItems(dto.OrderItems,orderId).Adapt<List<OrderItemsSet>>();
+                }
+                else
+                {
+                    await trans.RollbackAsync();
+                    response.Status = StatusCodes.Status400BadRequest;
+                    response.Message = OrderErrorsConstant.ORDERNOTSAVED;
+                    return response;
+                }
+
+                await _context.SaveChangesAsync();
+
+                await trans.CommitAsync();
+
+
+                response.Status = StatusCodes.Status200OK;
                response.Message = SharedMessages.SUCCESS;
-              
+                response.Data = orderSet.Adapt<OrderGetDTO>();
 
             }
             catch (Exception ex)
@@ -165,5 +195,56 @@ namespace Infrastructure.Repos
         {
             throw new NotImplementedException();
         }
+
+        #region HelperMethods
+        private IEnumerable<OrderItemsSet> FillOrderItems(IEnumerable<OrderItemsAddDTO> orderItems, int orderId)
+        {
+            var orderItemsList = new List<OrderItemsSet>();
+            foreach (var item in orderItems)
+            {
+               // Check product and quantity
+               var IsItemExist= _productRepo.IsAvailableInStock(item.ProductId, item.Quantity);
+
+                if (IsItemExist)
+                {
+                    orderItemsList.Add(new OrderItemsSet
+                    {
+                        Quantity = item.Quantity,
+                        OrderId = orderId,
+                        ProductId = item.ProductId,
+                        Price = _context.Products.First(p => p.Id == item.ProductId).Price * item.Quantity,
+                    });
+                }
+                else
+                {
+
+                }
+            }
+            return orderItemsList;
+        }
+
+        private async Task<double> GetOrderTotalAsync(IEnumerable<OrderItemsAddDTO> products)
+        {
+            var total = 0.0;
+            var productsIds = products.Select(e => e.ProductId).ToList();
+            var productsList = await _context.Products.Where(e => productsIds.Contains(e.Id))
+                .Select(e => new
+                {
+                    ProductId = e.Id,
+                    Price = e.Price
+                }).ToListAsync();
+
+            foreach ( var product in products )
+            {
+                var OrignalPrice = productsList.Where(e => e.ProductId == product.ProductId).
+                    Select(e => e.Price).FirstOrDefault();
+
+                    total += OrignalPrice * product.Quantity;
+            }
+            
+
+            return total;
+        }
+        #endregion
     }
 }
