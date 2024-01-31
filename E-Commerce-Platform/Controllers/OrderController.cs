@@ -42,12 +42,18 @@ namespace E_Commerce_Platform.Controllers
 
         #region Set
         [HttpPost("[action]")]
-        [Produces(typeof(OrderAddDTO))]
+        [Produces(typeof(object))]
         public async Task<IActionResult> Create(OrderAddDTO dto)
         {
             return Ok(await _repo.Create(dto)); ;
         }
-        
+
+        [HttpPut("[action]")]
+        [Produces(typeof(object))]
+        public async Task<IActionResult> Cancel(int orderId)
+        {
+            return Ok(await _repo.Cancel(orderId)); ;
+        }
         #endregion
     }
 }
