@@ -208,7 +208,26 @@ namespace Infrastructure.Repos
 
         public void Cancel(int OrderId)
         {
-            throw new NotImplementedException();
+            APIResponse<object> response = new();
+            try
+            {
+                // validate orederId
+                var order = _context.Orders.Include(o => o.OrderItems).ThenInclude(p => p.Product).Where(order=>order.Id==OrderId).FirstOrDefault();
+                // update order status to cancled
+                // update quantity stock  (retrive items)
+                if(order is  null)
+                {
+                    response.Message = "Order not found!";
+                    response.Status = StatusCodes.Status400BadRequest;
+                    return response;
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                response.Status = 500;
+                response.Message = ex.InnerException.Message;
+            }
         }
 
         #region HelperMethods
