@@ -270,7 +270,7 @@
           "orderItems": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/OrderItemsDTO"
+              "$ref": "#/components/schemas/OrderItemsAddDTO"
             },
             "nullable": true
           }
@@ -317,6 +317,20 @@
               "$ref": "#/components/schemas/OrderItemsDTO"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrderItemsAddDTO": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

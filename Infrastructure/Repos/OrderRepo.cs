@@ -118,10 +118,10 @@ namespace Infrastructure.Repos
         } 
         #endregion
 
-        public async Task<APIResponse<OrderGetDTO>> Create(OrderAddDTO dto)
+        public async Task<APIResponse<object>> Create(OrderAddDTO dto)
         {
             
-            var response = new APIResponse<OrderGetDTO>();
+            var response = new APIResponse<object>();
             using var trans = await _context.Database.BeginTransactionAsync();
             try
             {
@@ -154,7 +154,22 @@ namespace Infrastructure.Repos
                 int orderId = orderSet.Id;
                 if (orderId > 0)
                 {
-                    orderSet.OrderItems = FillOrderItems(dto.OrderItems,orderId).Adapt<List<OrderItemsSet>>();
+                    var orderItems = FillOrderItems(dto.OrderItems, orderId).Adapt<List<OrderItemsSet>>();
+
+                    foreach (var item in orderItems)
+                    {
+                        if (item.Quantity == 0)
+                        {
+                            await trans.RollbackAsync();
+                            response.Status = StatusCodes.Status400BadRequest;
+                            response.Message = $"Product with ID {item.ProductId} not in stock please remove it from product list!";                            
+                            return response;
+                        }
+
+                        _productRepo.UpdateProductQuantity(item.ProductId,item.Quantity);
+                    }
+                    
+                    orderSet.OrderItems = orderItems;
                 }
                 else
                 {
@@ -197,9 +212,10 @@ namespace Infrastructure.Repos
         }
 
         #region HelperMethods
-        private IEnumerable<OrderItemsSet> FillOrderItems(IEnumerable<OrderItemsAddDTO> orderItems, int orderId)
+        private IEnumerable<object> FillOrderItems(IEnumerable<OrderItemsAddDTO> orderItems, int orderId)
         {
             var orderItemsList = new List<OrderItemsSet>();
+            var notInStockProductsList = new List<OrderItemsSet>();
             foreach (var item in orderItems)
             {
                // Check product and quantity
@@ -217,10 +233,14 @@ namespace Infrastructure.Repos
                 }
                 else
                 {
-
+                    notInStockProductsList.Add(new OrderItemsSet
+                    {
+                        Quantity = 0,
+                        ProductId = item.ProductId
+                    }) ;                                                         
                 }
             }
-            return orderItemsList;
+            return orderItemsList.Concat(notInStockProductsList);
         }
 
         private async Task<double> GetOrderTotalAsync(IEnumerable<OrderItemsAddDTO> products)

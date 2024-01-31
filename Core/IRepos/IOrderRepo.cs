@@ -15,7 +15,7 @@ namespace Core.IRepos
         Task<APIResponse<PaginatedList<OrderGetDTO>>> GetCustomerOrdersAsync(int customerId, int pageNumber, int pageSize);
         Task<APIResponse<PaginatedList<OrderListDTO>>> GetOrdersAsync(int pageNumber, int pageSize);
         APIResponse<OrderGetDTO> GetById(int orderId);
-        Task<APIResponse<OrderGetDTO>> Create(OrderAddDTO dto);
+        Task<APIResponse<object>> Create(OrderAddDTO dto);
         void Update(int OrderId, OrderStatus orderStatus);
         void Cancel(int OrderId);
 

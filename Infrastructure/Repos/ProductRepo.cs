@@ -24,9 +24,34 @@ namespace Infrastructure.Repos
         /// <returns></returns>
         public bool IsAvailableInStock(int productId, int quantity)
         {
-            var validateProductQuantity = _context.Products.Where(p => p.Id == productId && p.Stock > quantity).FirstOrDefault();
+            if (quantity > 0)
+            {
+                var validateProductQuantity = _context.Products.Where(p => p.Id == productId && p.Stock >= quantity).FirstOrDefault();
+
+                return validateProductQuantity != null ? true : false;
+            }
+            else
+             return false; 
+        }
+
+        public bool UpdateProductQuantity(int productId, int quantity)
+        {
+            if( IsAvailableInStock(productId, quantity))
+            {
+                var product = _context.Products.FirstOrDefault(p=>p.Id ==  productId);
+                if (product == null)
+                {
+                    return false;
+                }
+                
+                product.Stock -= quantity;
+                _context.Products.Update(product);
+                _context.SaveChanges();
+                return true;
+            }
+
+            return false;
             
-            return validateProductQuantity != null ? true : false;
         }
     }
 }
