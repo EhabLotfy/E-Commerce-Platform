@@ -17,7 +17,7 @@ namespace Core.IRepos
         APIResponse<OrderGetDTO> GetById(int orderId);
         Task<APIResponse<object>> Create(OrderAddDTO dto);
         void Update(int OrderId, OrderStatus orderStatus);
-        void Cancel(int OrderId);
+        APIResponse<object> Cancel(int OrderId);
 
     }
 }
