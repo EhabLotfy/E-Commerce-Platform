@@ -166,7 +166,7 @@ namespace Infrastructure.Repos
                             return response;
                         }
 
-                        _productRepo.UpdateProductQuantity(item.ProductId,item.Quantity);
+                        _productRepo.UpdateProductQuantity(item.ProductId,item.Quantity,false);
                     }
                     
                     orderSet.OrderItems = orderItems;
@@ -198,48 +198,56 @@ namespace Infrastructure.Repos
             return response;
         }
 
-    
-
         public void Update(int OrderId, OrderStatus orderStatus)
         {
             
             throw new NotImplementedException();
         }
 
-        public APIResponse<object> Cancel(int OrderId)
+        public async Task<APIResponse<object>> Cancel(int OrderId)
         {
             APIResponse<object> response = new();
+            var trans = _context.Database.BeginTransaction();
             try
             {
                 // validate orederId
-                var order = _context.Orders.Include(o => o.OrderItems).ThenInclude(p => p.Product).Where(order=>order.Id==OrderId).FirstOrDefault();
+                var order =await _context.Orders.Include(o => o.OrderItems)
+                                                    .ThenInclude(p => p.Product)
+                                                    .Where(order=>order.Id==OrderId)
+                                                    .AsSplitQuery()
+                                                    .FirstOrDefaultAsync();
               
                 if(order is  null)
                 {
+                    await trans.RollbackAsync();
                     response.Message = "Order not found!";
                     response.Status = StatusCodes.Status400BadRequest;
                     return response;
                 }
                 if (order.status != OrderStatus.Pending)
                 {
+                    await trans.RollbackAsync();
                     response.Message = "Fail: Order not canceled you can cancel this order if his status is pending only!";
                     response.Status = StatusCodes.Status400BadRequest;
                     return response;
                 }
-                    // update order status to cancled
-
+                
                 order.status = OrderStatus.Canceled;
                 _context.Orders.Update(order);
                 _context.SaveChanges();
-                // update quantity stock  (retrive items)
+                
                 foreach( var item in order.OrderItems)
                 {
-
+                    _productRepo.UpdateProductQuantity(item.ProductId,item.Quantity,true);                   
                 }
 
+                await trans.CommitAsync();
+                response.Status = StatusCodes.Status200OK;
+                response.Message = SharedMessages.SUCCESS;                
             }
             catch (Exception ex)
             {
+                await trans.RollbackAsync();
                 response.Status = 500;
                 response.Message = ex.InnerException.Message;
             }

@@ -34,7 +34,7 @@ namespace Infrastructure.Repos
              return false; 
         }
 
-        public bool UpdateProductQuantity(int productId, int quantity)
+        public bool UpdateProductQuantity(int productId, int quantity, bool IsAdd)
         {
             if( IsAvailableInStock(productId, quantity))
             {
@@ -43,8 +43,11 @@ namespace Infrastructure.Repos
                 {
                     return false;
                 }
-                
+                if(IsAdd)
+                    product.Stock += quantity;
+                else
                 product.Stock -= quantity;
+
                 _context.Products.Update(product);
                 _context.SaveChanges();
                 return true;
