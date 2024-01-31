@@ -1,4 +1,5 @@
 ﻿using Core.DTOs.Order;
+using Core.Enums;
 using Core.IRepos;
 using Foods.Core.Helper;
 using Microsoft.AspNetCore.Http;
@@ -46,6 +47,13 @@ namespace E_Commerce_Platform.Controllers
         public async Task<IActionResult> Create(OrderAddDTO dto)
         {
             return Ok(await _repo.Create(dto)); ;
+        }
+
+        [HttpPut("[action]")]
+        [Produces(typeof(object))]
+        public async Task<IActionResult> SetState(int orderId,OrderStatus newState)
+        {
+            return Ok(await _repo.UpdateState(orderId,newState)); ;
         }
 
         [HttpPut("[action]")]
