@@ -11,12 +11,14 @@ namespace E_Commerce_Platform.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
+        #region Constructor and Properties
         private readonly IOrderRepo _repo;
 
         public OrderController(IOrderRepo repo)
         {
             _repo = repo;
-        }
+        } 
+        #endregion
 
         #region Get
         [HttpGet("[action]/customerId")]

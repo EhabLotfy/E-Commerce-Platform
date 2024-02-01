@@ -17,17 +17,19 @@ namespace Infrastructure.Repos
 {
     public class OrderRepo : IOrderRepo
     {
+        #region Constructor and Properties
         private readonly DataContext _context;
         private readonly IProductRepo _productRepo;
 
-        public IOrderState State { get;internal set; }
-        public OrderRepo(DataContext context,IProductRepo productRepo)
+        public IOrderState State { get; internal set; }
+        public OrderRepo(DataContext context, IProductRepo productRepo)
         {
             _context = context;
             _productRepo = productRepo;
             State = new OrderProcessingState();
-        }  
-        
+        }   
+        #endregion
+
         #region Get
         public object GetById(int orderId)
         {
@@ -115,12 +117,13 @@ namespace Infrastructure.Repos
                 response.Status = StatusCodes.Status500InternalServerError;
             }
             return response;
-        } 
+        }
         #endregion
 
+        #region Set
         public async Task<object> Create(OrderAddDTO dto)
         {
-            
+
             var response = new APIResponse<object>();
             using var trans = await _context.Database.BeginTransactionAsync();
             try
@@ -162,13 +165,13 @@ namespace Infrastructure.Repos
                         {
                             await trans.RollbackAsync();
                             response.Status = StatusCodes.Status400BadRequest;
-                            response.Message = $"Product with ID {item.ProductId} not in stock please remove it from product list!";                            
+                            response.Message = $"Product with ID {item.ProductId} not in stock please remove it from product list!";
                             return response;
                         }
 
-                        _productRepo.UpdateProductQuantity(item.ProductId,item.Quantity,false);
+                        _productRepo.UpdateProductQuantity(item.ProductId, item.Quantity, false);
                     }
-                    
+
                     orderSet.OrderItems = orderItems;
                 }
                 else
@@ -185,7 +188,7 @@ namespace Infrastructure.Repos
 
 
                 response.Status = StatusCodes.Status200OK;
-               response.Message = SharedMessages.SUCCESS;
+                response.Message = SharedMessages.SUCCESS;
                 response.Data = orderSet.Adapt<OrderGetDTO>();
 
             }
@@ -204,17 +207,17 @@ namespace Infrastructure.Repos
             try
             {
                 var order = await _context.Orders.FindAsync(OrderId);
-                if(order == null)
+                if (order == null)
                 {
                     response.Message = OrderErrorsConstant.ORDERNOTFOUND;
                     response.Status = StatusCodes.Status404NotFound;
                     return response;
                 }
 
-                if(order.status == OrderStatus.Pending && newState != OrderStatus.Canceled
+                if (order.status == OrderStatus.Pending && newState != OrderStatus.Canceled
                     || order.status == OrderStatus.Pending && newState != OrderStatus.Shipped
                     || order.status == OrderStatus.Shipped && newState != OrderStatus.Delivered
-                    || order.status ==  OrderStatus.Delivered && newState == OrderStatus.Delivered
+                    || order.status == OrderStatus.Delivered && newState == OrderStatus.Delivered
                     || order.status == OrderStatus.Canceled)
                 {
                     response.Message = "You can't set this state during current order state!";
@@ -222,7 +225,7 @@ namespace Infrastructure.Repos
                     return response;
                 }
                 order.status = newState;
-                _context.Orders.Update(order); 
+                _context.Orders.Update(order);
                 await _context.SaveChangesAsync();
 
                 response.Status = StatusCodes.Status200OK;
@@ -243,13 +246,13 @@ namespace Infrastructure.Repos
             try
             {
                 // validate orederId
-                var order =await _context.Orders.Include(o => o.OrderItems)
+                var order = await _context.Orders.Include(o => o.OrderItems)
                                                     .ThenInclude(p => p.Product)
-                                                    .Where(order=>order.Id==OrderId)
+                                                    .Where(order => order.Id == OrderId)
                                                     .AsSplitQuery()
                                                     .FirstOrDefaultAsync();
-              
-                if(order is  null)
+
+                if (order is null)
                 {
                     await trans.RollbackAsync();
                     response.Message = "Order not found!";
@@ -263,19 +266,19 @@ namespace Infrastructure.Repos
                     response.Status = StatusCodes.Status400BadRequest;
                     return response;
                 }
-                
+
                 order.status = OrderStatus.Canceled;
                 _context.Orders.Update(order);
                 _context.SaveChanges();
-                
-                foreach( var item in order.OrderItems)
+
+                foreach (var item in order.OrderItems)
                 {
-                    _productRepo.UpdateProductQuantity(item.ProductId,item.Quantity,true);                   
+                    _productRepo.UpdateProductQuantity(item.ProductId, item.Quantity, true);
                 }
 
                 await trans.CommitAsync();
                 response.Status = StatusCodes.Status200OK;
-                response.Message = SharedMessages.SUCCESS;                
+                response.Message = SharedMessages.SUCCESS;
             }
             catch (Exception ex)
             {
@@ -284,7 +287,8 @@ namespace Infrastructure.Repos
                 response.Message = ex.InnerException.Message;
             }
             return response;
-        }
+        } 
+        #endregion
 
         #region HelperMethods
         private IEnumerable<object> FillOrderItems(IEnumerable<OrderItemsAddDTO> orderItems, int orderId)

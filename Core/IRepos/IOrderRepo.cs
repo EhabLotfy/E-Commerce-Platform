@@ -16,7 +16,7 @@ namespace Core.IRepos
         Task<object> GetOrdersAsync(int pageNumber, int pageSize);
         object GetById(int orderId);
         Task<object> Create(OrderAddDTO dto);
-        void Update(int OrderId, OrderStatus orderStatus);
+        Task<APIResponse<object>> UpdateState(int OrderId, OrderStatus orderStatus);
         Task<object> Cancel(int OrderId);
 
     }
