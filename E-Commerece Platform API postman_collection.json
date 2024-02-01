@@ -1,0 +1,565 @@
+{
+	"info": {
+		"_postman_id": "e62239be-d6cc-40ea-8fe3-58da106e24e3",
+		"name": "E-Commerece Platform API Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "api/Order",
+			"item": [
+				{
+					"name": "/api/Order/Get/customerId",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/plain"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:44353/api/Order/Get/customerId?customerId=1&pageNumber=1&pageSize=20",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44353",
+							"path": [
+								"api",
+								"Order",
+								"Get",
+								"customerId"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "1"
+								},
+								{
+									"key": "pageNumber",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Order/Get/customerId?customerId=-52814144&pageNumber=-52814144&pageSize=-52814144",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Order",
+										"Get",
+										"customerId"
+									],
+									"query": [
+										{
+											"key": "customerId",
+											"value": "-52814144"
+										},
+										{
+											"key": "pageNumber",
+											"value": "-52814144"
+										},
+										{
+											"key": "pageSize",
+											"value": "-52814144"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"id\": 96602877,\n    \"orderDate\": \"1984-02-12T01:22:30.391Z\",\n    \"status\": 0,\n    \"customerId\": -6521389,\n    \"customerName\": \"sunt irure\",\n    \"customerEmail\": \"in et\",\n    \"customerAddress\": \"fugiat \",\n    \"totalAmount\": 62664701.257567585,\n    \"orderItems\": [\n      {\n        \"quantity\": -21095103,\n        \"price\": -71595169.69645879,\n        \"productId\": -77119252,\n        \"productName\": \"do et\"\n      },\n      {\n        \"quantity\": 18265581,\n        \"price\": -79806831.32792597,\n        \"productId\": 77317194,\n        \"productName\": \"minim qui amet aliqua\"\n      }\n    ]\n  },\n  {\n    \"id\": -72211179,\n    \"orderDate\": \"1971-09-05T00:43:12.426Z\",\n    \"status\": 0,\n    \"customerId\": 18327121,\n    \"customerName\": \"nostrud voluptate\",\n    \"customerEmail\": \"do est sit ea\",\n    \"customerAddress\": \"adipisicing enim\",\n    \"totalAmount\": -78137386.81354704,\n    \"orderItems\": [\n      {\n        \"quantity\": 96011917,\n        \"price\": -83295540.23468044,\n        \"productId\": -28003003,\n        \"productName\": \"aute id ad tempor do\"\n      },\n      {\n        \"quantity\": 46312057,\n        \"price\": 44326434.228106946,\n        \"productId\": -38425787,\n        \"productName\": \"laboris ad Duis nisi\"\n      }\n    ]\n  }\n]"
+						}
+					]
+				},
+				{
+					"name": "/api/Order/GetById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/plain"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/Order/GetById?orderId=1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"Order",
+								"GetById"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Order/GetById?orderId=-52814144",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Order",
+										"GetById"
+									],
+									"query": [
+										{
+											"key": "orderId",
+											"value": "-52814144"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"id\": -37867206,\n  \"orderDate\": \"2014-08-20T15:31:29.215Z\",\n  \"status\": 0,\n  \"customerId\": -22244982,\n  \"customerName\": \"reprehenderit \",\n  \"customerEmail\": \"dolore mollit nostrud sit consectetur\",\n  \"customerAddress\": \"Lorem mollit Duis voluptate\",\n  \"totalAmount\": 18716429.266287982,\n  \"orderItems\": [\n    {\n      \"quantity\": -142824,\n      \"price\": 93632546.36069769,\n      \"productId\": 36980109,\n      \"productName\": \"amet dolore esse\"\n    },\n    {\n      \"quantity\": -53001513,\n      \"price\": 4794009.889591426,\n      \"productId\": 90842509,\n      \"productName\": \"eiusmod sint velit\"\n    }\n  ]\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/Order/GetAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/plain"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/Order/GetAll?pageNumber=1&pageSize=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"Order",
+								"GetAll"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Order/GetAll?pageNumber=-52814144&pageSize=-52814144",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Order",
+										"GetAll"
+									],
+									"query": [
+										{
+											"key": "pageNumber",
+											"value": "-52814144"
+										},
+										{
+											"key": "pageSize",
+											"value": "-52814144"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"id\": 44811976,\n    \"orderDate\": \"2008-12-07T03:56:14.538Z\",\n    \"status\": 0,\n    \"customerId\": 61770511,\n    \"customerName\": \"exe\",\n    \"customerEmail\": \"magna commod\",\n    \"customerAddress\": \"dolore qui r\",\n    \"totalAmount\": 29731627.0747364,\n    \"orderItems\": [\n      {\n        \"quantity\": 59592980,\n        \"price\": 13464569.06752187,\n        \"productId\": 49043448,\n        \"productName\": \"ullamco exercitation nulla labore\"\n      },\n      {\n        \"quantity\": -2509505,\n        \"price\": -11616258.399888977,\n        \"productId\": 45221472,\n        \"productName\": \"sunt dolore\"\n      }\n    ]\n  },\n  {\n    \"id\": 72736686,\n    \"orderDate\": \"1974-02-24T00:45:13.957Z\",\n    \"status\": 0,\n    \"customerId\": -84407194,\n    \"customerName\": \"labore Lorem consequat sint\",\n    \"customerEmail\": \"anim pariatur aliquip esse\",\n    \"customerAddress\": \"Lorem tempor\",\n    \"totalAmount\": -1843326.43003726,\n    \"orderItems\": [\n      {\n        \"quantity\": -77918172,\n        \"price\": -83513705.28788808,\n        \"productId\": 94083701,\n        \"productName\": \"tempor\"\n      },\n      {\n        \"quantity\": 26328439,\n        \"price\": 4733604.680748418,\n        \"productId\": -93856609,\n        \"productName\": \"d\"\n      }\n    ]\n  }\n]"
+						}
+					]
+				},
+				{
+					"name": "/api/Order/Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "text/plain"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customerId\": 1,\n  \"orderItems\": [\n    {\n      \"productId\": 1,\n      \"quantity\": 5\n    },\n    {\n      \"productId\": 2,\n      \"quantity\": 3\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/Order/Create",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"Order",
+								"Create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"customerId\": 17249335,\n  \"orderItems\": [\n    {\n      \"productId\": 95842902,\n      \"quantity\": -22068873\n    },\n    {\n      \"productId\": 74827706,\n      \"quantity\": -57771998\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Order/Create",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Order",
+										"Create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						}
+					]
+				},
+				{
+					"name": "/api/Order/SetState",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/plain"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/Order/SetState?orderId=1&newState=2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"Order",
+								"SetState"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "1"
+								},
+								{
+									"key": "newState",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Order/SetState?orderId=-52814144&newState=<integer>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Order",
+										"SetState"
+									],
+									"query": [
+										{
+											"key": "orderId",
+											"value": "-52814144"
+										},
+										{
+											"key": "newState",
+											"value": "<integer>"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						}
+					]
+				},
+				{
+					"name": "/api/Order/Cancel",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/plain"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/Order/Cancel?orderId=2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"Order",
+								"Cancel"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Order/Cancel?orderId=-52814144",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Order",
+										"Cancel"
+									],
+									"query": [
+										{
+											"key": "orderId",
+											"value": "-52814144"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Get Weather Forecast",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/plain"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/WeatherForecast",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"WeatherForecast"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "Added as a part of security scheme: bearer",
+								"key": "Authorization",
+								"value": "Bearer <token>"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/WeatherForecast",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"WeatherForecast"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "[\n  {\n    \"date\": \"2013-11-21\",\n    \"temperatureC\": 4077356,\n    \"temperatureF\": 4347534,\n    \"summary\": \"in\"\n  },\n  {\n    \"date\": \"2016-02-03\",\n    \"temperatureC\": -19892618,\n    \"temperatureF\": -22854890,\n    \"summary\": \"Excepteur et\"\n  }\n]"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "<Bearer Token>",
+				"type": "string"
+			}
+		]
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "/",
+			"type": "string"
+		}
+	]
+}
