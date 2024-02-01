@@ -198,10 +198,42 @@ namespace Infrastructure.Repos
             return response;
         }
 
-        public void Update(int OrderId, OrderStatus orderStatus)
+        public async Task<APIResponse<object>> UpdateState(int OrderId, OrderStatus newState)
         {
-            
-            throw new NotImplementedException();
+            APIResponse<object> response = new();
+            try
+            {
+                var order = await _context.Orders.FindAsync(OrderId);
+                if(order == null)
+                {
+                    response.Message = OrderErrorsConstant.ORDERNOTFOUND;
+                    response.Status = StatusCodes.Status404NotFound;
+                    return response;
+                }
+
+                if(order.status == OrderStatus.Pending && newState != OrderStatus.Canceled
+                    || order.status == OrderStatus.Pending && newState != OrderStatus.Shipped
+                    || order.status == OrderStatus.Shipped && newState != OrderStatus.Delivered
+                    || order.status ==  OrderStatus.Delivered && newState == OrderStatus.Delivered
+                    || order.status == OrderStatus.Canceled)
+                {
+                    response.Message = "You can't set this state during current order state!";
+                    response.Status = StatusCodes.Status400BadRequest;
+                    return response;
+                }
+                order.status = newState;
+                _context.Orders.Update(order); 
+                await _context.SaveChangesAsync();
+
+                response.Status = StatusCodes.Status200OK;
+                response.Message = SharedMessages.SUCCESS;
+            }
+            catch (Exception ex)
+            {
+                response.Status = 500;
+                response.Message = ex.InnerException.Message;
+            }
+            return response;
         }
 
         public async Task<object> Cancel(int OrderId)
