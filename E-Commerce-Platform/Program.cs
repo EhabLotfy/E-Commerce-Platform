@@ -35,7 +35,9 @@ using (var serviceScope = app.Services.CreateScope())
 {
     var context = serviceScope.ServiceProvider.GetService<DataContext>();
 
+          context?.Database.Migrate();
     await DataSeed.SaveData(context);
+    
 }
 app.UseHttpsRedirection();
 
