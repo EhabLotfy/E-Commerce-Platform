@@ -12,12 +12,12 @@ namespace Core.IRepos
 {
     public interface IOrderRepo
     {
-        Task<APIResponse<PaginatedList<OrderGetDTO>>> GetCustomerOrdersAsync(int customerId, int pageNumber, int pageSize);
-        Task<APIResponse<PaginatedList<OrderListDTO>>> GetOrdersAsync(int pageNumber, int pageSize);
-        APIResponse<OrderGetDTO> GetById(int orderId);
-        Task<APIResponse<object>> Create(OrderAddDTO dto);
+        Task<object> GetCustomerOrdersAsync(int customerId, int pageNumber, int pageSize);
+        Task<object> GetOrdersAsync(int pageNumber, int pageSize);
+        object GetById(int orderId);
+        Task<object> Create(OrderAddDTO dto);
         void Update(int OrderId, OrderStatus orderStatus);
-        Task< APIResponse<object>> Cancel(int OrderId);
+        Task<object> Cancel(int OrderId);
 
     }
 }

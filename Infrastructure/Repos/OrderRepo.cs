@@ -29,7 +29,7 @@ namespace Infrastructure.Repos
         }  
         
         #region Get
-        public APIResponse<OrderGetDTO> GetById(int orderId)
+        public object GetById(int orderId)
         {
             APIResponse<OrderGetDTO> response = new();
             try
@@ -61,7 +61,7 @@ namespace Infrastructure.Repos
             return response;
         }
 
-        public async Task<APIResponse<PaginatedList<OrderGetDTO>>> GetCustomerOrdersAsync(int customerId, int pageNumber, int pageSize)
+        public async Task<object> GetCustomerOrdersAsync(int customerId, int pageNumber, int pageSize)
         {
             APIResponse<PaginatedList<OrderGetDTO>> response = new();
             try
@@ -96,7 +96,7 @@ namespace Infrastructure.Repos
             return response;
         }
 
-        public async Task<APIResponse<PaginatedList<OrderListDTO>>> GetOrdersAsync(int pageNumber, int pageSize)
+        public async Task<object> GetOrdersAsync(int pageNumber, int pageSize)
         {
             APIResponse<PaginatedList<OrderListDTO>> response = new();
             try
@@ -118,7 +118,7 @@ namespace Infrastructure.Repos
         } 
         #endregion
 
-        public async Task<APIResponse<object>> Create(OrderAddDTO dto)
+        public async Task<object> Create(OrderAddDTO dto)
         {
             
             var response = new APIResponse<object>();
@@ -204,7 +204,7 @@ namespace Infrastructure.Repos
             throw new NotImplementedException();
         }
 
-        public async Task<APIResponse<object>> Cancel(int OrderId)
+        public async Task<object> Cancel(int OrderId)
         {
             APIResponse<object> response = new();
             var trans = _context.Database.BeginTransaction();
